@@ -9,6 +9,7 @@ verify_ssl = true
 jupyter = "*"
 xml-etree-elementtree = "*"
 xml = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.7"
