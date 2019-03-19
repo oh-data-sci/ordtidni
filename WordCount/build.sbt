@@ -10,6 +10,9 @@ scalaVersion := "2.11.0"
 //libraryDependencies += "org.apache.spark" % "spark-core_2.10" % "2.2.2"
 //libraryDependencies += "org.apache.spark" % "spark-core_2.10" % "2.2.0"
 libraryDependencies += "org.apache.spark" % "spark-core_2.11" % "2.4.0"
+libraryDependencies += "org.apache.spark" % "spark-sql_2.11" % "2.4.0"
+libraryDependencies += "com.databricks" % "spark-xml_2.11" % "0.5.0"
+
 //libraryDependencies += "org.apache.spark" % "spark-core_2.12" % "2.4.0"
 
 //libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.6.0"
