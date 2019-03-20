@@ -1,5 +1,5 @@
 import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark
+
 
 object WordCount {
 
@@ -13,9 +13,10 @@ object WordCount {
 //    println("Got argument: " + arg1)
 //    conf.setMaster(spark_master)
     conf.setMaster("local")
-    conf.setAppName("Word Count")
+    conf.setAppName("Gigaword")
 //    conf.setMaster("yarn-cluster")
     val sc = new SparkContext(conf)
+
 
 
     // Load the text into a Spark RDD, which is a distributed representation of each line of text
@@ -24,6 +25,7 @@ object WordCount {
 
     //val textFile = sc.textFile("src/main/resources/shakespeare.txt")
     val textFile = sc.textFile("/Users/borkur/Downloads/Gigaword/blob.txt.out")
+
 
 
 
