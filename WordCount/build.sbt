@@ -12,6 +12,7 @@ scalaVersion := "2.11.0"
 libraryDependencies += "org.apache.spark" % "spark-core_2.11" % "2.4.0"
 libraryDependencies += "org.apache.spark" % "spark-sql_2.11" % "2.4.0"
 libraryDependencies += "com.databricks" % "spark-xml_2.11" % "0.5.0"
+libraryDependencies += "com.amazonaws" % "aws-java-sdk" %   "1.7.4"
 
 //libraryDependencies += "org.apache.spark" % "spark-core_2.12" % "2.4.0"
 
