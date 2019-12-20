@@ -3,7 +3,7 @@
 set -x
 
 # H
-#PATH=/Users/borkur/Downloads/spark-2.4.0-bin-custom-spark-2.4.0-hadoop-3.2/bin:$PATH
+PATH=/Users/borkur/Downloads/spark-2.4.0-bin-custom-spark-2.4.0-hadoop-3.2/bin:$PATH
 
 export SPARK_JAVA_OPTS="-Xmx16g"
 #Where I've placed the various JAR files to get all of this to work :/
