@@ -1,5 +1,6 @@
 //import org.apache.spark.sql.{SparkSession, functions}
 import org.apache.spark.sql._
+import org.apache.spark.sql.functions
 import org.apache.spark.sql.expressions.Window
 import com.databricks.spark.xml._
 
@@ -77,8 +78,8 @@ object XMLScraper {
     if(l_month == "*")
       l_month=""
 
-//    val l_outputString = "s3a://ordtidni/output/" +  l_source + "/" +l_year+  "/" +l_month
-    val l_outputString = "/tmp/Gigaword/output/"+  l_source + "/" +l_year +  "/" +l_month
+    val l_outputString = "s3a://ordtidni/output/" +  l_source + "/" +l_year+  "/" +l_month
+//    val l_outputString = "/tmp/Gigaword/output/"+  l_source + "/" +l_year +  "/" +l_month
 
 
     println("Input:  "+l_inputString)
@@ -99,44 +100,56 @@ object XMLScraper {
     // TODO Handle this better, e.g. read the first file from the input string?
     val giga_schema = sc.read
       .format("com.databricks.spark.xml")
+      .option("rootTag","body")
       .option("rowTag", "p") // Only reading in 'P' = 'Paragraph'
       .xml("/tmp/schema.xml")
       .schema
 
-//    giga_schema.printTreeString()
+    giga_schema.printTreeString()
     //Read all the files in the input string
     //Construct a single data frame containing the Lemma,Type and actual word.
     //_n is <p n="1"> i.e. paragraph number
     //s._n is <s n="1"> i.e. sentence number within the paragraph
 
-    val windowSpec = Window.partitionBy("_n","s._n").orderBy("_n","s._n")
+    val windowSpec = Window.partitionBy("Paragraph" ,"Sentence").orderBy("Paragraph" ,"Sentence")
 
     val df = sc.read
       .format("com.databricks.spark.xml")
-      .option("rowTag", "s") // Only reading in 'S' = 'Sentence'
+      .option("rootTag","body")
+      .option("rowTag", "p") // Only reading in 'S' = 'Sentence'
       .schema(giga_schema) //This saved 10 minutes over 43.000 files. fro 10m to 0.4 s for this step. (morgunbladid/2015). Using one XML file as the schema to avoid schema discovery each time
       .xml(l_inputString+"/*.xml") // Given dataset, source and year: add all months and all XML files
-      .withColumn("Words",functions.explode(functions.col("s.w"))) // Flatten out
-      .withColumn("Lemma",functions.explode(functions.col("Words._lemma"))) // Flatten out
-      .withColumn("POS",functions.explode(functions.col("Words._type"))) // Flatten out
-      .withColumn("Word",functions.explode(functions.col("Words._VALUE"))) // Flatten out
-      //.withColumn("word_number", row_number().over(windowSpec)) // Add the word number within the sentence
-      .select("Lemma","POS","Word")
-      .toDF("Lemma","POS","Word") // Just the columns we want.
 
-    df.printSchema()
+
+
+    //df.show()
+
+      val selected =
+      df
+        .withColumn("Sents",functions.explode(functions.col("s"))) // Flatten out
+        .withColumn("Words",functions.explode(functions.col("Sents.w")))
+        .withColumn("Paragraph",functions.col("_n"))
+        .withColumn("Sentence",functions.col("Sents._n"))
+        .withColumn("word_number", functions.row_number().over(windowSpec)) // Add the word number within the sentence
+        .select("Paragraph" ,"Sentence","word_number","Words._lemma" ,"Words._type","Words._VALUE")
+        .toDF("Paragraph","Sentence","word_number","Lemma","POS","Word") // Just the columns we want.
+//        .toDF("Lemma","POS","Word") // Just the columns we want.
+
+//    df.printSchema()
+//    selected.printSchema()
+//    selected.show()
 
 
     // TODO parameterise the number of partitions?
-    df
-      .coalesce(10)
+    selected
+      .coalesce(1)
       .write
       .format("parquet")
       .option("spark.sql.parquet.mergeSchema","true")
       .mode("overwrite")
       .save(l_outputString) // save to S3
-//    df
-//      .coalesce(1)
+//    selected
+//      //.coalesce(1)
 //      .write
 //      .format("com.databricks.spark.csv").option("header", "true")
 //      .mode("overwrite")

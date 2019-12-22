@@ -3,14 +3,14 @@
 set -x
 
 # H
-PATH=/Users/borkur/Downloads/spark-2.4.0-bin-custom-spark-2.4.0-hadoop-3.2/bin:$PATH
+PATH=/Users/borkur/spark/spark-2.4.0-bin-custom-spark-2.4.0-hadoop-3.2/bin:$PATH
 
 export SPARK_JAVA_OPTS="-Xmx16g"
 #Where I've placed the various JAR files to get all of this to work :/
-JR=/Users/borkur/Downloads/Gigaword/jar_files
+JR=/Users/borkur/opt/jar_files
 
 # This files gets created if I manually run `sbt package`
-SCRAPE_JAR=/Users/borkur/Documents/GIT/oh-data-sci/ordtidni/WordCount/target/scala-2.11/ordtidnixml_2.11-0.1.jar
+SCRAPE_JAR=/Users/borkur/Git/oh-data-sci/ordtidni/WordCount/target/scala-2.11/ordtidnixml_2.11-0.1.jar
 # this file gets built with IntelliJ
 # SCRAPE_JAR=$JR/OrdtidniXML.jar
 

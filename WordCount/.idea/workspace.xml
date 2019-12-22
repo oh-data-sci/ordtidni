@@ -2,17 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc8497c3-88b7-46c1-9898-27540d3bb830" name="Default Changelist" comment="" />
-    <ignored path="$PROJECT_DIR$/project/project/target/" />
-    <ignored path="$PROJECT_DIR$/project/target/" />
-    <ignored path="$PROJECT_DIR$/target/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
+  </component>
+  <component name="ErrorTreeViewConfiguration">
+    <option name="hideInfoMessages" value="true" />
+    <option name="hideWarnings" value="true" />
+    <option name="HIDE_WARNINGS" value="true" />
+    <option name="HIDE_INFO_MESSAGES" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -21,52 +26,6 @@
   </component>
   <component name="FavoritesManager">
     <favorites_list name="OrdtidniXML" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/WordCount.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="7" selection-start-column="7" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#53#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.sbt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/runScrape.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="96" selection-start-line="18" selection-start-column="96" selection-end-line="18" selection-end-column="96" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/XMLScraper.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1083">
-              <caret line="135" column="24" selection-start-line="135" selection-start-column="24" selection-end-line="135" selection-end-column="24" />
-              <folding>
-                <element signature="e#56#85#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -84,64 +43,26 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/project/XMLScraper.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/WordCount.scala" />
-        <option value="$PROJECT_DIR$/scripts/runScrape.sh" />
-        <option value="$PROJECT_DIR$/build.sbt" />
-        <option value="$PROJECT_DIR$/src/main/scala/XMLScraper.scala" />
-      </list>
-    </option>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="2560" />
-    <option name="height" value="1440" />
-  </component>
+  <component name="ProjectId" id="1VJGrCarwWMHwNeUXaq83ksY3H0" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="OrdtidniXML" type="58d84e3e:PackageViewProjectNode" />
-              <item name="OrdtidniXML" type="616d4139:PackageViewModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane" />
-    </panes>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555933186748" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.56454545" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+    <property name="project.structure.side.proportion" value="0.18217821" />
+    <property name="settings.editor.selected.configurable" value="Scala Compiler" />
   </component>
   <component name="RunManager" selected="Application.XMLScrape">
     <configuration name="WordCount" type="Application" factoryName="Application">
@@ -178,7 +99,7 @@
           <value>
             <list>
               <ExternalProjectPojo>
-                <option name="name" value="wordcount [file:/Users/borkur/Documents/GIT/oh-data-sci/ordtidni/WordCount/]" />
+                <option name="name" value="wordcount [file:/Users/borkur/Git/oh-data-sci/ordtidni/WordCount/]" />
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
@@ -192,7 +113,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$/build.sbt" value="377644944" />
+        <entry key="$PROJECT_DIR$/build.sbt" value="1790695241" />
         <entry key="$PROJECT_DIR$/project/XMLScraper.scala" value="2837822145" />
         <entry key="$PROJECT_DIR$/project/build.properties" value="1396028727" />
       </map>
@@ -203,6 +124,18 @@
       <map>
         <entry key="xml" value="XML" />
       </map>
+    </option>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
     </option>
   </component>
   <component name="SvnConfiguration">
@@ -227,168 +160,69 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4983957" visible="true" weight="0.27561557" />
-      <window_info id="Structure" order="1" sideWeight="0.50102043" side_tool="true" weight="0.26739928" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="Capture Tool" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" sideWeight="0.50160426" side_tool="true" weight="0.27045178" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.493895" weight="0.32959184" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.498779" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.4993895" weight="0.32959184" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4993895" weight="0.32959184" />
-      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="8" sideWeight="0.498779" weight="0.32857144" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4993895" weight="0.32959184" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.506105" side_tool="true" weight="0.32959184" />
-      <window_info anchor="bottom" id="Build" order="11" sideWeight="0.493895" weight="0.32959184" />
-      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.497558" weight="0.26734695" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Capture Analysis" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="sbt" order="8" />
-    </layout>
+  <component name="WindowStateProjectService">
+    <state x="328" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576966281645">
+      <screen x="0" y="23" width="1792" height="1030" />
+    </state>
+    <state x="328" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1030@0.23.1792.1030" timestamp="1576966281645" />
+    <state x="688" y="460" width="416" height="159" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog" timestamp="1576965232724">
+      <screen x="0" y="23" width="1792" height="1030" />
+    </state>
+    <state x="688" y="460" width="416" height="159" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog/0.23.1792.1030@0.23.1792.1030" timestamp="1576965232724" />
+    <state width="1750" height="391" key="GridCell.Tab.0.bottom" timestamp="1577023490124">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="391" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490124" />
+    <state width="1358" height="267" key="GridCell.Tab.0.bottom/0.23.1792.1030@0.23.1792.1030" timestamp="1576969995182" />
+    <state width="1750" height="391" key="GridCell.Tab.0.center" timestamp="1577023490123">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="391" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490123" />
+    <state width="1358" height="267" key="GridCell.Tab.0.center/0.23.1792.1030@0.23.1792.1030" timestamp="1576969995181" />
+    <state width="1750" height="391" key="GridCell.Tab.0.left" timestamp="1577023490122">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="391" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490122" />
+    <state width="1358" height="267" key="GridCell.Tab.0.left/0.23.1792.1030@0.23.1792.1030" timestamp="1576969995181" />
+    <state width="1750" height="391" key="GridCell.Tab.0.right" timestamp="1577023490123">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="391" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490123" />
+    <state width="1358" height="267" key="GridCell.Tab.0.right/0.23.1792.1030@0.23.1792.1030" timestamp="1576969995182" />
+    <state width="1750" height="391" key="GridCell.Tab.1.bottom" timestamp="1577023490125">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="391" key="GridCell.Tab.1.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490125" />
+    <state width="1750" height="391" key="GridCell.Tab.1.center" timestamp="1577023490124">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="391" key="GridCell.Tab.1.center/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490124" />
+    <state width="1750" height="391" key="GridCell.Tab.1.left" timestamp="1577023490124">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="391" key="GridCell.Tab.1.left/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490124" />
+    <state width="1750" height="391" key="GridCell.Tab.1.right" timestamp="1577023490125">
+      <screen x="0" y="0" width="1792" height="1120" />
+    </state>
+    <state width="1750" height="391" key="GridCell.Tab.1.right/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490125" />
+    <state x="397" y="177" width="1189" height="837" key="SettingsEditor" timestamp="1576968575221">
+      <screen x="0" y="23" width="1792" height="1030" />
+    </state>
+    <state x="397" y="177" width="1189" height="837" key="SettingsEditor/0.23.1792.1030@0.23.1792.1030" timestamp="1576968575221" />
+    <state x="573" y="370" key="com.intellij.ide.util.TipDialog" timestamp="1576964037079">
+      <screen x="0" y="23" width="1792" height="1030" />
+    </state>
+    <state x="573" y="370" key="com.intellij.ide.util.TipDialog/0.23.1792.1030@0.23.1792.1030" timestamp="1576964037079" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/project/XMLScraper.scala" />
-    <entry file="file://$PROJECT_DIR$/bdc.md">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/runWordCount.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/scrape_cluster.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/build.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assembly.sbt_notworking">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/WordCount.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="7" selection-start-column="7" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.sbt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/runScrape.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="96" selection-start-line="18" selection-start-column="96" selection-end-line="18" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/XMLScraper.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1083">
-          <caret line="135" column="24" selection-start-line="135" selection-start-column="24" selection-end-line="135" selection-end-column="24" />
-          <folding>
-            <element signature="e#56#85#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>OrdtidniXML:jar</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2709091" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.14859438" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>scala-sdk-2.12.7</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.14859438" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.14859438" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>OrdtidniXML</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.14859438" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>sbt: aopalliance:aopalliance:1.0:jar</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.56454545" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/src/main/scala/XMLScraper.scala</url>
+          <line>137</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

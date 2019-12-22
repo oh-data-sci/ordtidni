@@ -6,7 +6,7 @@ version := "0.1"
 //scalaVersion := "2.12.8"
 scalaVersion := "2.11.12"
 //scalaVersion := "2.10.0"
-
+compileOrder := CompileOrder.JavaThenScala
 // https://mvnrepository.com/artifact/org.apache.spark/spark-core
 
 //libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.6.7.1"

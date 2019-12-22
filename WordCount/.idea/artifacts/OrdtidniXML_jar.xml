@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="OrdtidniXML:jar">
+  <artifact type="jar" name="OrdtidniXML:jar">
     <output-path>$USER_HOME$/Downloads/Gigaword/jar_files</output-path>
     <root id="archive" name="OrdtidniXML.jar">
       <element id="module-output" name="OrdtidniXML" />
