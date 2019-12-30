@@ -36,6 +36,10 @@ object XMLScraper {
           nextOption(map ++ Map('year -> value.toString), tail)
         case "--month" :: value :: tail =>
           nextOption(map ++ Map('month -> value.toString), tail)
+        case "--sourceFS" :: value :: tail =>
+          nextOption(map ++ Map('sourceFS -> value.toString), tail)
+        case "--targetFS" :: value :: tail =>
+          nextOption(map ++ Map('targetFS -> value.toString), tail)
         case option :: tail => println("Unknown option "+option)
           throw new Exception ("Unknown options: "+ arglist.toStream)
       }
@@ -51,6 +55,10 @@ object XMLScraper {
     println("Year:" + l_year)
     var l_month = l_options.getOrElse('month,"*")
     println("Month: " + l_month)
+    val l_sourceFS = l_options.getOrElse('sourceFS,"s3a://ordtidni/XML")
+    println(l_sourceFS)
+    val l_targetFS = l_options.getOrElse('targetFS,"s3a://ordtidni/output")
+    println(l_targetFS)
 
     if(l_source == "No Source")
       throw new Exception ("No Source provided  "  + arglist.toStream)
@@ -60,13 +68,13 @@ object XMLScraper {
 
     //Deal with my lame wildcard values
     if(l_year == "*") {
-      l_year = "*"
+      //l_year = "*"
       l_month = "*"
     }
 
 
     //Input string needs wildcards
-    val l_inputString  = "s3a://ordtidni/XML/" +  l_source + "/" +l_year + "/" +l_month
+    val l_inputString  = l_sourceFS+"/" + l_source + "/" +l_year + "/" +l_month
 
     //Output strings needs blanks, to collapse the data to the highest level
     // e.g. if no month is given, data will end up on the year level
@@ -78,7 +86,7 @@ object XMLScraper {
     if(l_month == "*")
       l_month=""
 
-    val l_outputString = "s3a://ordtidni/output/" +  l_source + "/" +l_year+  "/" +l_month
+    val l_outputString = l_targetFS +"/" +  l_source + "/" +l_year+  "/" +l_month
 //    val l_outputString = "/tmp/Gigaword/output/"+  l_source + "/" +l_year +  "/" +l_month
 
 
@@ -91,9 +99,9 @@ object XMLScraper {
     // TODO handle dataset, source, year and month. Still think Spark Streaming is what we need
     // Let's get the Spark context
     //If running in IntelliJ we must set the master, and appname
-        val sc = SparkSession.builder.master("local").appName("XMLScraper").getOrCreate()
+//        val sc = SparkSession.builder.master("local").appName("XMLScraper").getOrCreate()
     // Else get it from spark-submit call
-//    val sc = SparkSession.builder.getOrCreate()
+    val sc = SparkSession.builder.getOrCreate()
 
     //Create a schema object
     //Get the schema from a single XML example to use for the bulk, /tmp/schema.xml is a copy of any random datafile.
@@ -111,7 +119,7 @@ object XMLScraper {
     //_n is <p n="1"> i.e. paragraph number
     //s._n is <s n="1"> i.e. sentence number within the paragraph
 
-    val windowSpec = Window.partitionBy("Paragraph" ,"Sentence").orderBy("Paragraph" ,"Sentence")
+    val windowSpec = Window.partitionBy("input_file","Paragraph" ,"Sentence").orderBy("input_file","Paragraph" ,"Sentence")
 
     val df = sc.read
       .format("com.databricks.spark.xml")
@@ -119,28 +127,32 @@ object XMLScraper {
       .option("rowTag", "p") // Only reading in 'S' = 'Sentence'
       .schema(giga_schema) //This saved 10 minutes over 43.000 files. fro 10m to 0.4 s for this step. (morgunbladid/2015). Using one XML file as the schema to avoid schema discovery each time
       .xml(l_inputString+"/*.xml") // Given dataset, source and year: add all months and all XML files
+//      .xml("/Users/borkur/Downloads/schema.xml")
 
 
 
     //df.show()
+    val rexepx = "[\\/]([^\\/]+[\\/][^\\/]+)$"
 
       val selected =
       df
+        .withColumn("input_file",functions.regexp_extract(functions.input_file_name(), rexepx, 1))  // Capture the input filename
         .withColumn("Sents",functions.explode(functions.col("s"))) // Flatten out
         .withColumn("Words",functions.explode(functions.col("Sents.w")))
         .withColumn("Paragraph",functions.col("_n"))
         .withColumn("Sentence",functions.col("Sents._n"))
         .withColumn("word_number", functions.row_number().over(windowSpec)) // Add the word number within the sentence
-        .select("Paragraph" ,"Sentence","word_number","Words._lemma" ,"Words._type","Words._VALUE")
-        .toDF("Paragraph","Sentence","word_number","Lemma","POS","Word") // Just the columns we want.
+        .select("input_file","Paragraph" ,"Sentence","word_number","Words._lemma" ,"Words._type","Words._VALUE")
+        .toDF("input_file","Paragraph","Sentence","word_number","Lemma","POS","Word") // Just the columns we want.
 //        .toDF("Lemma","POS","Word") // Just the columns we want.
 
 //    df.printSchema()
-//    selected.printSchema()
+    selected.printSchema()
 //    selected.show()
 
 
     // TODO parameterise the number of partitions?
+    //TODO parameterise output format
     selected
       .coalesce(1)
       .write
@@ -149,7 +161,7 @@ object XMLScraper {
       .mode("overwrite")
       .save(l_outputString) // save to S3
 //    selected
-//      //.coalesce(1)
+//      .coalesce(1)
 //      .write
 //      .format("com.databricks.spark.csv").option("header", "true")
 //      .mode("overwrite")
