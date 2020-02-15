@@ -1,4 +1,4 @@
-Use dfs.tmp;
+Use dfs.giga;
 
 drop view if exists ordtidni;
 
@@ -38,3 +38,48 @@ SELECT `source`,
 	COUNT(DISTINCT `input_file`) AS `files`
 FROM  dfs.tmp.`ordtidni`
 GROUP BY `source`;
+
+create table Ordtidni_Summary_years as
+SELECT year,
+  COUNT(*) AS `words`,
+  count(distinct word) as dist_word,
+  count(distinct POS) as dist_POS,
+  count(distinct Lemma) as dist_Lemma,
+  count(distinct source) as dist_source,
+  COUNT(DISTINCT `year`) AS `years`,
+  COUNT(DISTINCT `input_file`) AS `files`
+FROM  dfs.tmp.`ordtidni`
+GROUP by year;
+
+create table Ordtidni_Summary_all as
+SELECT 
+  COUNT(*) AS `words`,
+  count(distinct word) as dist_word,
+  count(distinct POS) as dist_POS,
+  count(distinct Lemma) as dist_Lemma,
+  count(distinct source) as dist_source,
+  COUNT(DISTINCT `year`) AS `years`,
+  COUNT(DISTINCT `input_file`) AS `files`
+FROM  dfs.tmp.`ordtidni`
+where substr(POS,1,1) in ('e','v','x') and POS not in ('ta');
+
+POS not in ('ta','e','v','x','as') and POS not like 'n%s'
+
+select substr(POS,1,1) as flokkur,
+   count(*) as words,
+   count(distinct word) as dist_word,
+   count(distinct Lemma) as dist_Lemma
+   from dfs.tmp.`ordtidni`
+group by substr(POS,1,1)
+order by words desc
+
+select count(*) from (
+select lemma,
+   count(*) as words,
+   count(distinct lower(word)) as dist_word
+   from dfs.tmp.`ordtidni`
+   where substr(POS,1,1) NOT in ('e','v','x')  // foreign, web and non-classified
+     and POS not in ('ta') // numbers ?
+group by lemma
+having count(distinct lower(word)) = 1)
+order by lemma limit 100
