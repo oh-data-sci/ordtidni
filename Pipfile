@@ -13,6 +13,8 @@ spacy = "*"
 matplotlib = "*"
 pyarrow = "*"
 s3fs = "*"
+modin = "*"
+cudf = "*"
 
 [requires]
 python_version = "3.7"
