@@ -6,9 +6,13 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-jupyter = "*"
-xml-etree-elementtree = "*"
-xml = "*"
+jupyterlab = "*"
+pandas = "*"
+tqdm = "*"
+spacy = "*"
+matplotlib = "*"
+pyarrow = "*"
+s3fs = "*"
 
 [requires]
 python_version = "3.7"
