@@ -1,98 +1,170 @@
 //import org.apache.spark.sql.{SparkSession, functions}
 import org.apache.spark.sql._
+import org.apache.spark.sql.functions
+import org.apache.spark.sql.expressions.Window
 import com.databricks.spark.xml._
-import org.apache.hadoop.fs._
-//import com.amazonaws.
+
+
+
 
 object XMLScraper {
   def main(args: Array[String]) {
 
     val n = args.length
 
-    val usage = "Usage: XMLScraper --dataset Dataset  [--source Source String] [--year Year num] " +
-      //+"[--month Month num] " +
-      "e.g. MIM mbl 2015 10"
+    val l_usage = "Usage: XMLScraper  --source Source [--year Year] " +
+      "[--month Month] \n" +
+      "e.g.  mbl 2015 10 \n" +
+      " or althingi \n"
 
-    if(n < 6)
-      throw new Exception ("Must provide dataset, source and year to read from: "+ usage)
+    if(n < 2)
+      throw new Exception ("Must provide source  "+ l_usage)
 
     val arglist = args.toList
 
-    //if(n == 6)
-    //  throw new Exception ("Good job: "+ arglist.toStream)
 
     type OptionMap = Map[Symbol, Any]
     def nextOption(map : OptionMap, list: List[String]) : OptionMap = {
       def isSwitch(s : String) = (s(0) == '-')
       list match {
         case Nil => map
-        case "--dataset" :: value :: tail =>
-          nextOption(map ++ Map('dataset -> value.toString), tail)
+//        case "--dataset" :: value :: tail =>
+//          nextOption(map ++ Map('dataset -> value.toString), tail)
         case "--source" :: value :: tail =>
           nextOption(map ++ Map('source -> value.toString), tail)
         case "--year" :: value :: tail =>
           nextOption(map ++ Map('year -> value.toString), tail)
         case "--month" :: value :: tail =>
           nextOption(map ++ Map('month -> value.toString), tail)
+        case "--sourceFS" :: value :: tail =>
+          nextOption(map ++ Map('sourceFS -> value.toString), tail)
+        case "--targetFS" :: value :: tail =>
+          nextOption(map ++ Map('targetFS -> value.toString), tail)
         case option :: tail => println("Unknown option "+option)
           throw new Exception ("Unknown options: "+ arglist.toStream)
       }
     }
 
-    var l_options = nextOption(Map(),arglist)
+    val l_options = nextOption(Map(),arglist)
     println(l_options)
-    var l_ds = l_options('dataset)
-    println(l_ds)
-    var l_source = l_options('source)
-    println(l_source)
-    var l_year = l_options('year)
-    println(l_year)
-//    var Any l_month="*"
-//    try {
-//      l_month = l_options('month)
-//    }
-//    println(l_month)
-    //throw new Exception ("going home  "+ arglist.toStream)
+   // var l_ds = l_options('dataset)
+    //println(l_ds)
+    val l_source = l_options.getOrElse('source,"No Source")
+    println("Source: " + l_source)
+    var l_year = l_options.getOrElse('year,"*")
+    println("Year:" + l_year)
+    var l_month = l_options.getOrElse('month,"*")
+    println("Month: " + l_month)
+    val l_sourceFS = l_options.getOrElse('sourceFS,"s3a://ordtidni/XML")
+    println(l_sourceFS)
+    val l_targetFS = l_options.getOrElse('targetFS,"s3a://ordtidni/output")
+    println(l_targetFS)
+
+    if(l_source == "No Source")
+      throw new Exception ("No Source provided  "  + arglist.toStream)
 
 
-    //val sc = SparkSession.builder.master("local").appName("XMLScraper").getOrCreate()
-    val sc = SparkSession.builder.getOrCreate()
-    var l_inputString = "s3a://borkur-gigaword/XML/" + l_ds + "/" +  l_source + "/" +l_year
 
-    //sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", accessKeyId)
-    //sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", secretAccessKey)
+
+    //Deal with my lame wildcard values
+    if(l_year == "*") {
+      //l_year = "*"
+      l_month = "*"
+    }
+
+
+    //Input string needs wildcards
+    val l_inputString  = l_sourceFS+"/" + l_source + "/" +l_year + "/" +l_month
+
+    //Output strings needs blanks, to collapse the data to the highest level
+    // e.g. if no month is given, data will end up on the year level
+    // e.g. if no year is given, data will end up on the source level
+
+    if(l_year == "*")
+      l_year=""
+
+    if(l_month == "*")
+      l_month=""
+
+    val l_outputString = l_targetFS +"/" +  l_source + "/" +l_year+  "/" +l_month
+//    val l_outputString = "/tmp/Gigaword/output/"+  l_source + "/" +l_year +  "/" +l_month
+
+
+    println("Input:  "+l_inputString)
+    println("Output: "+l_outputString)
+
+    //throw new Exception (l_usage+" " + arglist.toStream)
 
     // TODO This is perhaps better done with Spark Streaming ?
     // TODO handle dataset, source, year and month. Still think Spark Streaming is what we need
-    val l_dataset = args
+    // Let's get the Spark context
+    //If running in IntelliJ we must set the master, and appname
+//        val sc = SparkSession.builder.master("local").appName("XMLScraper").getOrCreate()
+    // Else get it from spark-submit call
+    val sc = SparkSession.builder.getOrCreate()
+
+    //Create a schema object
+    //Get the schema from a single XML example to use for the bulk, /tmp/schema.xml is a copy of any random datafile.
+    // TODO Handle this better, e.g. read the first file from the input string?
     val giga_schema = sc.read
       .format("com.databricks.spark.xml")
-      .option("rowTag", "s") // Only reading in 'S' = 'Sentence'
-      .xml("/tmp/schema.xml").schema //Get the schema from a single XML example to use for the bulk
+      .option("rootTag","body")
+      .option("rowTag", "p") // Only reading in 'P' = 'Paragraph'
+      .xml("/tmp/schema.xml")
+      .schema
+
+    giga_schema.printTreeString()
+    //Read all the files in the input string
+    //Construct a single data frame containing the Lemma,Type and actual word.
+    //_n is <p n="1"> i.e. paragraph number
+    //s._n is <s n="1"> i.e. sentence number within the paragraph
+
+    val windowSpec = Window.partitionBy("input_file","Paragraph" ,"Sentence").orderBy("input_file","Paragraph" ,"Sentence")
 
     val df = sc.read
       .format("com.databricks.spark.xml")
-      .option("rowTag", "s") // Only reading in 'S' = 'Sentence'
-      .schema(giga_schema) //This saved 10 minutes over 43.000 files. fro 10m to 0.4 s for this step. (morgunbladid/2015)
-      .xml(l_inputString+"/*/*.xml") // Given dataset, source and year: add all months and all XML files
-      .withColumn("Word",functions.explode(functions.col("w"))) // Flatten out
-      .select("Word._lemma","Word._type","Word._VALUE").toDF("Lemma","POS","Word") // Just the columns we want.
-      //.repartition(600,functions.col("POS")) // Not convinced this is doing what I think it does. at least not getting one partition per POS
+      .option("rootTag","body")
+      .option("rowTag", "p") // Only reading in 'S' = 'Sentence'
+      .schema(giga_schema) //This saved 10 minutes over 43.000 files. fro 10m to 0.4 s for this step. (morgunbladid/2015). Using one XML file as the schema to avoid schema discovery each time
+      .xml(l_inputString+"/*.xml") // Given dataset, source and year: add all months and all XML files
+//      .xml("/Users/borkur/Downloads/schema.xml")
 
-//    df.write
-//        .format("com.databricks.spark.csv")
-//        .option("header", "false")
-//        .mode("overwrite")
-//        .save("/tmp/scrape/") // save to HDFS
 
-    df.coalesce(1)
+
+    //df.show()
+    val rexepx = "[\\/]([^\\/]+[\\/][^\\/]+)$"
+
+      val selected =
+      df
+        .withColumn("input_file",functions.regexp_extract(functions.input_file_name(), rexepx, 1))  // Capture the input filename
+        .withColumn("Sents",functions.explode(functions.col("s"))) // Flatten out
+        .withColumn("Words",functions.explode(functions.col("Sents.w")))
+        .withColumn("Paragraph",functions.col("_n"))
+        .withColumn("Sentence",functions.col("Sents._n"))
+        .withColumn("word_number", functions.row_number().over(windowSpec)) // Add the word number within the sentence
+        .select("input_file","Paragraph" ,"Sentence","word_number","Words._lemma" ,"Words._type","Words._VALUE")
+        .toDF("input_file","Paragraph","Sentence","word_number","Lemma","POS","Word") // Just the columns we want.
+//        .toDF("Lemma","POS","Word") // Just the columns we want.
+
+//    df.printSchema()
+    selected.printSchema()
+//    selected.show()
+
+
+    // TODO parameterise the number of partitions?
+    //TODO parameterise output format
+    selected
+      .coalesce(1)
       .write
-      .format("com.databricks.spark.csv")
-      .option("header", "false")
-      //.mode("overwrite")
-      .mode("append")
-      .save("s3a://borkur-gigaword/output") // save to S3
-
-
+      .format("parquet")
+      .option("spark.sql.parquet.mergeSchema","true")
+      .mode("overwrite")
+      .save(l_outputString) // save to S3
+//    selected
+//      .coalesce(1)
+//      .write
+//      .format("com.databricks.spark.csv").option("header", "true")
+//      .mode("overwrite")
+//      .save(l_outputString) // save to S3
   }
 }

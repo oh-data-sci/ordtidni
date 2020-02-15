@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ScalaSpark.iml" filepath="$PROJECT_DIR$/.idea/modules/ScalaSpark.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ScalaSpark-build.iml" filepath="$PROJECT_DIR$/.idea/modules/ScalaSpark-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OrdtidniXML.iml" filepath="$PROJECT_DIR$/.idea/modules/OrdtidniXML.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OrdtidniXML-build.iml" filepath="$PROJECT_DIR$/.idea/modules/OrdtidniXML-build.iml" />
     </modules>
   </component>
 </project>
