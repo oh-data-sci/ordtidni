@@ -12,7 +12,12 @@ library(tidyverse)
 # This is using Apache Drill as an SQL engine.
 ### from ?src_drill : This is a DBI wrapper around the Drill REST API. TODO username/password support
 ### The port, 8047, is only accessible from a fixed IP, due to the lack of username/passport support.
-db <- src_drill("34.245.113.42") #Connect to already running stand-alone Drill. `Started with drill-embeded on remote server` 
+#Connect to already running stand-alone Drill. `Started with drill-embeded on remote server` 
+# oml is an entry in my local /etc/hosts pointing to an AWS instance
+db <- src_drill("oml") 
+
+db <- src_drill("localhost") 
+
 # apache drill (dfs.tmp)> show tables;
 # +--------------+-------------------------+
 #   | TABLE_SCHEMA |       TABLE_NAME        |
