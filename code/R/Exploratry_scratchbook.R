@@ -6,6 +6,10 @@
 #install.packages("tidyverse")
 library(sergeant) # Get Apache Drill
 library(tidyverse)
+#library(arrow)
+
+library(RJDBC)
+library(dbplyr)
 
 # Get a connection to data sources ----------------------------------------
 
@@ -136,4 +140,73 @@ EyjanAll <-
   arrange(desc(Occ)) 
   
 dbDisconnect(db)
-db
+
+# Apache Drill JDBC -------------------------------------------------------
+
+
+drv <- JDBC(driverClass="org.apache.drill.jdbc.Driver", classPath="/usr/local/Cellar/apache-drill/1.16.0/libexec/jars/jdbc-driver/drill-jdbc-all-1.16.0.jar")
+conn <- dbConnect(drv, url=sprintf("jdbc:drill:drillbit=localhost"))
+
+Sys.setenv(DRILL_JDBC_JAR='/usr/local/Cellar/apache-drill/1.16.0/libexec/jars/jdbc-driver/drill-jdbc-all-1.16.0.jar')
+
+con2 <- drill_jdbc(nodes='localhost',use_zk=FALSE)
+# all_MBL <- dbGetQuery(con2,"select * from dfs.gw.ordtidni where POS like 'n%' and POS not like '%s'")
+
+# all_nouns <- dbGetQuery(con2,"select * from dfs.gw.Ordtidni_Nafnord_an_Serheita")
+
+# all_nouns <- tbl(con2,from=in_schema("dfs.gw","Ordtidni_Nafnord_an_Serheita"))
+# library(dbplyr)
+sql_subquery.DRILL <- function (con, from, name=NA , ...) 
+{
+  if (is.ident(from)) {
+    setNames(from, name)
+  }
+  else {
+    if (is.null(name)) {
+      build_sql( from, con = con)
+    }
+    else {
+      build_sql( from, " AS ", ident(name), con = con)
+    }
+  }
+}
+
+
+
+#sql_translate_env.JDBCConnection <- dbplyr:::sql_translate_env.Hive
+sql_translate_env.JDBCConnection <- dbplyr:::sql_translate_env.MySQLConnection
+
+#sql_select.JDBCConnection <- dbplyr:::sql_select.DBIConnection
+# sql_subquery.JDBCConnection  <- dbplyr:::sql_subquery.SQLiteConnection
+# sql_subquery.JDBCConnection  <- dbplyr:::sql_subquery.Oracle
+# sql_subquery.JDBCConnection  <- dbplyr:::sql_subquery.DBIConnection
+# sql_subquery.JDBCConnection  <- dbplyr:::sql_subquery.
+# 
+
+sql_subquery.JDBCConnection  <- sql_subquery.DRILL
+sql_escape_ident.JDBCConnection <- dbplyr:::sql_escape_ident.MySQLConnection
+
+
+ot <-
+  con2 %>%
+  tbl(in_schema("dfs.gw","Ordtidni_Nafnord_an_Serheita")) %>% 
+  collect()
+
+get_it <-
+  con2 %>%
+  tbl(in_schema("dfs.gw","ordtidni")) %>%
+  filter(POS %like% 'n%' && POS %not like% '%s') %>%
+  summarise(words = n(), unique_lemmas=n_distinct(lemma)) %>%
+  as.data.frame()
+
+  show_query()
+
+
+
+all_nouns %>% show_query()
+
+con2 %>%
+  tbl(in_schema('dfs.gw','Ordtidni_Nafnord_an_Serheita')) %>%
+  summarise(to=sum(occ))
+
+

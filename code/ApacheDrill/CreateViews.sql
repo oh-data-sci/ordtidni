@@ -82,4 +82,14 @@ select lemma,
      and POS not in ('ta') // numbers ?
 group by lemma
 having count(distinct lower(word)) = 1)
-order by lemma limit 100
+order by lemma limit 100;
+
+create table Ordtidni_Nafnord_an_Serheita
+	as
+	select lemma,count(*) as occ
+	from ordtidni
+	where POS like 'n%' --nafnorð
+	and POS not like '%s' -- ekki sérheiti
+	group by lemma
+	order by occ desc;
+	
