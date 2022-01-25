@@ -35,5 +35,5 @@ spark-submit \
 --conf spark.hadoop.fs.s3.impl=org.apache.hadoop.fs.s3a.S3AFileSystem \
 --conf spark.jars=$JARS \
 --jars $JARS \
---master local[4] --executor-memory 4G --class XMLScraper --name XMLScraper_App \
+--master local[4] --executor-memory 8G --class XMLScraper --name XMLScraper_App \
 $SCRAPE_JAR $*

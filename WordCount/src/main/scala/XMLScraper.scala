@@ -99,9 +99,9 @@ object XMLScraper {
     // TODO handle dataset, source, year and month. Still think Spark Streaming is what we need
     // Let's get the Spark context
     //If running in IntelliJ we must set the master, and appname
-//        val sc = SparkSession.builder.master("local").appName("XMLScraper").getOrCreate()
+        val sc = SparkSession.builder.master("local").appName("XMLScraper").getOrCreate()
     // Else get it from spark-submit call
-    val sc = SparkSession.builder.getOrCreate()
+//    val sc = SparkSession.builder.getOrCreate()
 
     //Create a schema object
     //Get the schema from a single XML example to use for the bulk, /tmp/schema.xml is a copy of any random datafile.

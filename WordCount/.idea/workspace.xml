@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc8497c3-88b7-46c1-9898-27540d3bb830" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../code/ApacheDrill/CreateViews.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../code/ApacheDrill/CreateViews.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../code/R/Exploratry_scratchbook.R" beforeDir="false" afterPath="$PROJECT_DIR$/../code/R/Exploratry_scratchbook.R" afterDir="false" />
-    </list>
+    <list default="true" id="dc8497c3-88b7-46c1-9898-27540d3bb830" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,9 +26,6 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="OrdtidniXML" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -55,7 +52,6 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -79,7 +75,7 @@
     <configuration name="XMLScrape" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="XMLScraper" />
       <module name="OrdtidniXML" />
-      <option name="PROGRAM_PARAMETERS" value="--source bleikt --year 2010 --month 12 --sourceFS $USER_HOME$/Downloads/Gigaword/Data/MIM --targetFS $USER_HOME$/Downloads/Gigaword/output" />
+      <option name="PROGRAM_PARAMETERS" value="--source mbl --sourceFS $USER_HOME$/Downloads/Gigaword/Data/ --targetFS $USER_HOME$/Downloads/Gigaword/output" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -89,40 +85,6 @@
       <item itemvalue="Application.XMLScrape" />
     </list>
   </component>
-  <component name="SbtLocalSettings">
-    <option name="availableProjects">
-      <map>
-        <entry>
-          <key>
-            <ExternalProjectPojo>
-              <option name="name" value="OrdtidniXML" />
-              <option name="path" value="$PROJECT_DIR$" />
-            </ExternalProjectPojo>
-          </key>
-          <value>
-            <list>
-              <ExternalProjectPojo>
-                <option name="name" value="wordcount [file:/Users/borkur/Git/oh-data-sci/ordtidni/WordCount/]" />
-                <option name="path" value="$PROJECT_DIR$" />
-              </ExternalProjectPojo>
-              <ExternalProjectPojo>
-                <option name="name" value="OrdtidniXML-build" />
-                <option name="path" value="$PROJECT_DIR$/project" />
-              </ExternalProjectPojo>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="modificationStamps">
-      <map>
-        <entry key="$PROJECT_DIR$" value="3153815034863" />
-        <entry key="$PROJECT_DIR$/build.sbt" value="1790695241" />
-        <entry key="$PROJECT_DIR$/project/XMLScraper.scala" value="2837822145" />
-        <entry key="$PROJECT_DIR$/project/build.properties" value="1396028727" />
-      </map>
-    </option>
-  </component>
   <component name="ScalaProjectSettings">
     <option name="intInjectionMapping">
       <map>
@@ -130,18 +92,7 @@
       </map>
     </option>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -165,69 +116,34 @@
     </todo-panel>
   </component>
   <component name="WindowStateProjectService">
-    <state x="328" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577575326987">
-      <screen x="0" y="0" width="1792" height="1120" />
+    <state x="744" y="379" width="1770" height="682" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607471201891">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="328" y="171" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1577575326987" />
-    <state x="328" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1030@0.23.1792.1030" timestamp="1576966281645" />
-    <state x="688" y="460" width="416" height="159" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog" timestamp="1576965232724">
-      <screen x="0" y="23" width="1792" height="1030" />
+    <state x="744" y="379" width="1770" height="682" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607471201891" />
+    <state width="1301" height="536" key="GridCell.Tab.0.bottom" timestamp="1607642303878">
+      <screen x="0" y="25" width="2560" height="1415" />
     </state>
-    <state x="688" y="460" width="416" height="159" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog/0.23.1792.1030@0.23.1792.1030" timestamp="1576965232724" />
-    <state x="520" y="164" key="CommitChangelistDialog2" timestamp="1577197058318">
-      <screen x="0" y="0" width="1792" height="1120" />
+    <state width="2518" height="515" key="GridCell.Tab.0.bottom/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607471207172" />
+    <state width="1301" height="536" key="GridCell.Tab.0.bottom/0.25.2560.1415/2560.153.1792.1095@0.25.2560.1415" timestamp="1607642303878" />
+    <state width="1301" height="536" key="GridCell.Tab.0.center" timestamp="1607642303875">
+      <screen x="0" y="25" width="2560" height="1415" />
     </state>
-    <state x="520" y="164" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1577197058318" />
-    <state width="1750" height="405" key="GridCell.Tab.0.bottom" timestamp="1577577184194">
-      <screen x="0" y="23" width="1792" height="1097" />
+    <state width="2518" height="515" key="GridCell.Tab.0.center/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607471207169" />
+    <state width="1301" height="536" key="GridCell.Tab.0.center/0.25.2560.1415/2560.153.1792.1095@0.25.2560.1415" timestamp="1607642303875" />
+    <state width="1301" height="536" key="GridCell.Tab.0.left" timestamp="1607642303874">
+      <screen x="0" y="25" width="2560" height="1415" />
     </state>
-    <state width="1750" height="405" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1577543204314" />
-    <state width="1358" height="267" key="GridCell.Tab.0.bottom/0.23.1792.1030@0.23.1792.1030" timestamp="1576969995182" />
-    <state width="1750" height="405" key="GridCell.Tab.0.bottom/0.23.1792.1097@0.23.1792.1097" timestamp="1577577184194" />
-    <state width="1750" height="405" key="GridCell.Tab.0.center" timestamp="1577577184192">
-      <screen x="0" y="23" width="1792" height="1097" />
+    <state width="2518" height="515" key="GridCell.Tab.0.left/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607471207168" />
+    <state width="1301" height="536" key="GridCell.Tab.0.left/0.25.2560.1415/2560.153.1792.1095@0.25.2560.1415" timestamp="1607642303874" />
+    <state width="1301" height="536" key="GridCell.Tab.0.right" timestamp="1607642303877">
+      <screen x="0" y="25" width="2560" height="1415" />
     </state>
-    <state width="1750" height="405" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1577543204313" />
-    <state width="1358" height="267" key="GridCell.Tab.0.center/0.23.1792.1030@0.23.1792.1030" timestamp="1576969995181" />
-    <state width="1750" height="405" key="GridCell.Tab.0.center/0.23.1792.1097@0.23.1792.1097" timestamp="1577577184192" />
-    <state width="1750" height="405" key="GridCell.Tab.0.left" timestamp="1577577184192">
-      <screen x="0" y="23" width="1792" height="1097" />
+    <state width="2518" height="515" key="GridCell.Tab.0.right/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607471207171" />
+    <state width="1301" height="536" key="GridCell.Tab.0.right/0.25.2560.1415/2560.153.1792.1095@0.25.2560.1415" timestamp="1607642303877" />
+    <state x="789" y="356" key="SettingsEditor" timestamp="1607470369930">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="1750" height="405" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1577543204312" />
-    <state width="1358" height="267" key="GridCell.Tab.0.left/0.23.1792.1030@0.23.1792.1030" timestamp="1576969995181" />
-    <state width="1750" height="405" key="GridCell.Tab.0.left/0.23.1792.1097@0.23.1792.1097" timestamp="1577577184192" />
-    <state width="1750" height="405" key="GridCell.Tab.0.right" timestamp="1577577184193">
-      <screen x="0" y="23" width="1792" height="1097" />
-    </state>
-    <state width="1750" height="405" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1577543204314" />
-    <state width="1358" height="267" key="GridCell.Tab.0.right/0.23.1792.1030@0.23.1792.1030" timestamp="1576969995182" />
-    <state width="1750" height="405" key="GridCell.Tab.0.right/0.23.1792.1097@0.23.1792.1097" timestamp="1577577184193" />
-    <state width="1750" height="391" key="GridCell.Tab.1.bottom" timestamp="1577023490125">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="1750" height="391" key="GridCell.Tab.1.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490125" />
-    <state width="1750" height="391" key="GridCell.Tab.1.center" timestamp="1577023490124">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="1750" height="391" key="GridCell.Tab.1.center/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490124" />
-    <state width="1750" height="391" key="GridCell.Tab.1.left" timestamp="1577023490124">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="1750" height="391" key="GridCell.Tab.1.left/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490124" />
-    <state width="1750" height="391" key="GridCell.Tab.1.right" timestamp="1577023490125">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state width="1750" height="391" key="GridCell.Tab.1.right/0.0.1792.1120@0.0.1792.1120" timestamp="1577023490125" />
-    <state x="397" y="177" width="1189" height="837" key="SettingsEditor" timestamp="1576968575221">
-      <screen x="0" y="23" width="1792" height="1030" />
-    </state>
-    <state x="397" y="177" width="1189" height="837" key="SettingsEditor/0.23.1792.1030@0.23.1792.1030" timestamp="1576968575221" />
-    <state x="573" y="377" key="com.intellij.ide.util.TipDialog" timestamp="1580898487796">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state x="573" y="377" key="com.intellij.ide.util.TipDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1577542510171" />
-    <state x="573" y="370" key="com.intellij.ide.util.TipDialog/0.23.1792.1030@0.23.1792.1030" timestamp="1576964037079" />
-    <state x="573" y="377" key="com.intellij.ide.util.TipDialog/1792.0.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1580898487796" />
+    <state x="789" y="356" key="SettingsEditor/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607470369930" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
