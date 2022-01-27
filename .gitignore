@@ -1,9 +1,12 @@
 Gigaword/
 data/
 .ipynb_checkpoints/
-WordCount/scripts/logs
-*.logs
+logs
 .parquet
 .Rproj.user
 .RData
 .Rhistory
+target
+.idea
+project
+*.bak.*
