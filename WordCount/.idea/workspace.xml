@@ -55,6 +55,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555933186748" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -114,46 +116,5 @@
       <are-packages-shown value="true" />
       <is-autoscroll-to-source value="true" />
     </todo-panel>
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="744" y="379" width="1770" height="682" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607471201891">
-      <screen x="0" y="0" width="2560" height="1440" />
-    </state>
-    <state x="744" y="379" width="1770" height="682" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607471201891" />
-    <state width="1301" height="536" key="GridCell.Tab.0.bottom" timestamp="1607642303878">
-      <screen x="0" y="25" width="2560" height="1415" />
-    </state>
-    <state width="2518" height="515" key="GridCell.Tab.0.bottom/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607471207172" />
-    <state width="1301" height="536" key="GridCell.Tab.0.bottom/0.25.2560.1415/2560.153.1792.1095@0.25.2560.1415" timestamp="1607642303878" />
-    <state width="1301" height="536" key="GridCell.Tab.0.center" timestamp="1607642303875">
-      <screen x="0" y="25" width="2560" height="1415" />
-    </state>
-    <state width="2518" height="515" key="GridCell.Tab.0.center/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607471207169" />
-    <state width="1301" height="536" key="GridCell.Tab.0.center/0.25.2560.1415/2560.153.1792.1095@0.25.2560.1415" timestamp="1607642303875" />
-    <state width="1301" height="536" key="GridCell.Tab.0.left" timestamp="1607642303874">
-      <screen x="0" y="25" width="2560" height="1415" />
-    </state>
-    <state width="2518" height="515" key="GridCell.Tab.0.left/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607471207168" />
-    <state width="1301" height="536" key="GridCell.Tab.0.left/0.25.2560.1415/2560.153.1792.1095@0.25.2560.1415" timestamp="1607642303874" />
-    <state width="1301" height="536" key="GridCell.Tab.0.right" timestamp="1607642303877">
-      <screen x="0" y="25" width="2560" height="1415" />
-    </state>
-    <state width="2518" height="515" key="GridCell.Tab.0.right/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607471207171" />
-    <state width="1301" height="536" key="GridCell.Tab.0.right/0.25.2560.1415/2560.153.1792.1095@0.25.2560.1415" timestamp="1607642303877" />
-    <state x="789" y="356" key="SettingsEditor" timestamp="1607470369930">
-      <screen x="0" y="0" width="2560" height="1440" />
-    </state>
-    <state x="789" y="356" key="SettingsEditor/0.0.2560.1440/2560.128.1792.1120@0.0.2560.1440" timestamp="1607470369930" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="scala-line">
-          <url>file://$PROJECT_DIR$/src/main/scala/XMLScraper.scala</url>
-          <line>148</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
