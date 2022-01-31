@@ -63,9 +63,6 @@ object XMLScraper {
     if(l_source == "No Source")
       throw new Exception ("No Source provided  "  + arglist.toStream)
 
-
-
-
     //Deal with my lame wildcard values
     if(l_year == "*") {
       //l_year = "*"
@@ -87,7 +84,6 @@ object XMLScraper {
       l_month=""
 
     val l_outputString = l_targetFS +"/" +  l_source + "/" +l_year+  "/" +l_month
-//    val l_outputString = "/tmp/Gigaword/output/"+  l_source + "/" +l_year +  "/" +l_month
 
 
     println("Input:  "+l_inputString)
@@ -99,9 +95,9 @@ object XMLScraper {
     // TODO handle dataset, source, year and month. Still think Spark Streaming is what we need
     // Let's get the Spark context
     //If running in IntelliJ we must set the master, and appname
-        val sc = SparkSession.builder.master("local").appName("XMLScraper").getOrCreate()
+        //val sc = SparkSession.builder.master("local").appName("XMLScraper").getOrCreate()
     // Else get it from spark-submit call
-//    val sc = SparkSession.builder.getOrCreate()
+    val sc = SparkSession.builder.getOrCreate()
 
     //Create a schema object
     //Get the schema from a single XML example to use for the bulk, /tmp/schema.xml is a copy of any random datafile.
@@ -127,16 +123,13 @@ object XMLScraper {
       .option("rowTag", "p") // Only reading in 'S' = 'Sentence'
       .schema(giga_schema) //This saved 10 minutes over 43.000 files. fro 10m to 0.4 s for this step. (morgunbladid/2015). Using one XML file as the schema to avoid schema discovery each time
       .xml(l_inputString+"/*.xml") // Given dataset, source and year: add all months and all XML files
-//      .xml("/Users/borkur/Downloads/schema.xml")
-
-
 
     //df.show()
-    val rexepx = "[\\/]([^\\/]+[\\/][^\\/]+)$"
+    val regexp = "[\\/]([^\\/]+[\\/][^\\/]+)$"
 
       val selected =
       df
-        .withColumn("input_file",functions.regexp_extract(functions.input_file_name(), rexepx, 1))  // Capture the input filename
+        .withColumn("input_file",functions.regexp_extract(functions.input_file_name(), regexp, 1))  // Capture the input filename
         .withColumn("Sents",functions.explode(functions.col("s"))) // Flatten out
         .withColumn("Words",functions.explode(functions.col("Sents.w")))
         .withColumn("Paragraph",functions.col("_n"))
@@ -159,12 +152,7 @@ object XMLScraper {
       .format("parquet")
       .option("spark.sql.parquet.mergeSchema","true")
       .mode("overwrite")
-      .save(l_outputString) // save to S3
-//    selected
-//      .coalesce(1)
-//      .write
-//      .format("com.databricks.spark.csv").option("header", "true")
-//      .mode("overwrite")
-//      .save(l_outputString) // save to S3
+      .save(l_outputString) // save to output file system
+
   }
 }

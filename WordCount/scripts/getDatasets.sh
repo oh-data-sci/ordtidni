@@ -1,8 +1,6 @@
-:
+source ./config/variables.properties
 
-SourceFS=/Users/borkur/Downloads/Gigaword/Data
-
-for i in ${SourceFS}/*
+for i in ${XML_DATA}/*
 do
 echo $(basename $i)
 done
