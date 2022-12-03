@@ -12,9 +12,11 @@ else
 	exit 0
 fi
 
+#--master local[*] \
 export SPARK_JAVA_OPTS="-Xmx16g"
-
 spark-submit \
 --packages com.databricks:spark-xml_2.12:0.14.0 \
---master local[8] --executor-memory 4G --class XMLScraper --name XMLScraper_App \
+--master spark://localhost:7077  \
+--deploy-mode client \
+--executor-memory 1G --class XMLScraper --name XMLScraper_App \
 $SCRAPE_JAR $*

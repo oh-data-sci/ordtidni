@@ -26,13 +26,14 @@ do
 	#printf "${dsize} ${dataset}\n"
 	if [ ${dsize} -lt ${MEGABYTE_LIMIT} ]; 
 	then
-		printf "${dataset} I can gobble up in one go!\n"
+		printf "${dataset} I can gobble up in one go! (${dsize}MB)\n"
+		/usr/bin/time -h  ./runScrape.sh --source $dataset --sourceFS ${XML_DATA} --targetFS ${OUTPUTDIR} &> logs/$dataset.ALL.log
 	else
 		printf "${dataset} I will gobble up by year: ${dsize}Mb \n "
 		for year in $( ls -l ${XML_DATA}/${dataset} | grep ^d| cut -c48- )
 		do
 		echo "--source $dataset --year $year"
-			time  ./runScrape.sh --source $dataset --year $year --sourceFS ${XML_DATA} --targetFS /Users/borkur/Downloads/Gigaword/output  &> logs/$dataset.$year.log
+			/usr/bin/time -h  ./runScrape.sh --source $dataset --year $year --sourceFS ${XML_DATA} --targetFS ${OUTPUTDIR} &> logs/$dataset.$year.log
 			printf "."
 		done
 		printf "\n"
