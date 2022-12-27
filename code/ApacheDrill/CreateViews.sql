@@ -2,6 +2,22 @@
 
 use dfs.gw;
 
+select `dir0` as source,
+       substr(input_file,1,instr(input_file,'/')-1) as year,
+       substr(input_file,instr(input_file,'/')+1) as the_file, 
+       word_number, 
+       Lemma, 
+       POS, 
+       Word
+from  dfs.gw.`output2022` limit 10;
+
+select *
+from dfs.gw.`output2022`
+WHERE `dir0` like 'IGC-B%'
+order by 1  
+;
+
+
 create or replace view ordtidni
 as 
 	select `dir0` as source, 
@@ -14,6 +30,17 @@ as
 		  POS,
 		  Word
 	from dfs.gw.`output/`;
+
+CREATE or replace view ordtidni
+as
+select `dir0` as source,
+       substr(input_file,1,instr(input_file,'/')-1) as year,
+       substr(input_file,instr(input_file,'/')+1) as the_file, 
+       word_number, 
+       Lemma, 
+       POS, 
+       Word
+from  dfs.gw.`output2022`
 	
 select source,count(*) as words 
 from ordtidni 

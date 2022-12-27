@@ -7,5 +7,6 @@ logs
 .Rhistory
 target
 */.idea
+*/.bsp
 project
 *.bak.*

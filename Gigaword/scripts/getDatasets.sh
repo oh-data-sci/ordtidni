@@ -1,4 +1,4 @@
-source ./config/variables.properties
+source ./config/setenv.sh
 
 for i in ${XML_DATA}/*
 do

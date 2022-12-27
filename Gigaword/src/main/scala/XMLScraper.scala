@@ -83,7 +83,7 @@ object XMLScraper {
     if(l_month == "*")
       l_month=""
 
-    val l_outputString = l_targetFS +"/" +  l_source + "/" +l_year+  "/" +l_month
+    val l_outputString = l_targetFS +"/" +  l_source + "/" +l_year+  "/"  +l_month
 
 
     println("Input:  "+l_inputString)
@@ -95,13 +95,14 @@ object XMLScraper {
     // TODO handle dataset, source, year and month. Still think Spark Streaming is what we need
     // Let's get the Spark context
     //If running in IntelliJ we must set the master, and appname
-        //val sc = SparkSession.builder.master("local").appName("XMLScraper").getOrCreate()
+    //val sc = SparkSession.builder.master("local").appName("XMLScraper").getOrCreate()
     // Else get it from spark-submit call
     val sc = SparkSession.builder.getOrCreate()
 
     //Create a schema object
     //Get the schema from a single XML example to use for the bulk, /tmp/schema.xml is a copy of any random datafile.
-    // TODO Handle this better, e.g. read the first file from the input string?
+    // TODO: Handle this better, e.g. read the first file from the input string?
+    // TODO: Can the schema be saved as a file in the project?
     val giga_schema = sc.read
       .format("com.databricks.spark.xml")
       .option("rootTag","body")
@@ -115,7 +116,7 @@ object XMLScraper {
     //_n is <p n="1"> i.e. paragraph number
     //s._n is <s n="1"> i.e. sentence number within the paragraph
 
-    val windowSpec = Window.partitionBy("input_file","Paragraph" ,"Sentence").orderBy("input_file","Paragraph" ,"Sentence")
+    val windowSpec = Window.partitionBy("input_file"/*, "Paragraph" ,"Sentence"*/).orderBy("input_file" /*,"Paragraph" ,"Sentence"*/)
 
     val df = sc.read
       .format("com.databricks.spark.xml")
@@ -125,6 +126,7 @@ object XMLScraper {
       .xml(l_inputString+"/*.xml") // Given dataset, source and year: add all months and all XML files
 
     //df.show()
+    // WTF does this ol' regexp do?
     val regexp = "[\\/]([^\\/]+[\\/][^\\/]+)$"
 
       val selected =
@@ -132,11 +134,13 @@ object XMLScraper {
         .withColumn("input_file",functions.regexp_extract(functions.input_file_name(), regexp, 1))  // Capture the input filename
         .withColumn("Sents",functions.explode(functions.col("s"))) // Flatten out
         .withColumn("Words",functions.explode(functions.col("Sents.w")))
-        .withColumn("Paragraph",functions.col("_n"))
-        .withColumn("Sentence",functions.col("Sents._n"))
+        //.withColumn("Paragraph",functions.col("_n"))
+        //.withColumn("Sentence",functions.col("Sents._n"))
         .withColumn("word_number", functions.row_number().over(windowSpec)) // Add the word number within the sentence
-        .select("input_file","Paragraph" ,"Sentence","word_number","Words._lemma" ,"Words._type","Words._VALUE")
-        .toDF("input_file","Paragraph","Sentence","word_number","Lemma","POS","Word") // Just the columns we want.
+        .select("input_file","word_number","Words._lemma" ,"Words._pos","Words._VALUE")
+        //.select("input_file","Paragraph" ,"Sentence","word_number","Words._lemma" ,"Words._type","Words._VALUE")
+        //.toDF("input_file","Paragraph","Sentence","word_number","Lemma","POS","Word") // Just the columns we want.
+        .toDF("input_file","word_number","Lemma","POS","Word") // Just the columns we want.
 //        .toDF("Lemma","POS","Word") // Just the columns we want.
 
 //    df.printSchema()
