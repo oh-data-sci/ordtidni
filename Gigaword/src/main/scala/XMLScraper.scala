@@ -116,12 +116,12 @@ object XMLScraper {
     //_n is <p n="1"> i.e. paragraph number
     //s._n is <s n="1"> i.e. sentence number within the paragraph
 
-    val windowSpec = Window.partitionBy("input_file"/*, "Paragraph" ,"Sentence"*/).orderBy("input_file" /*,"Paragraph" ,"Sentence"*/)
-
+    val windowSpec = Window.partitionBy(/*"input_file", "Paragraph" ,*/"Sentence").orderBy("Sentence")
+    // TODO 
     val df = sc.read
       .format("com.databricks.spark.xml")
       .option("rootTag","body")
-      .option("rowTag", "p") // Only reading in 'S' = 'Sentence'
+      .option("rowTag", "p") // Only reading in 'P' = 'Paragraphs'
       .schema(giga_schema) //This saved 10 minutes over 43.000 files. fro 10m to 0.4 s for this step. (morgunbladid/2015). Using one XML file as the schema to avoid schema discovery each time
       .xml(l_inputString+"/*.xml") // Given dataset, source and year: add all months and all XML files
 
@@ -131,22 +131,18 @@ object XMLScraper {
 
       val selected =
       df
-        .withColumn("input_file",functions.regexp_extract(functions.input_file_name(), regexp, 1))  // Capture the input filename
+        //.withColumn("input_file",functions.regexp_extract(functions.input_file_name(), regexp, 1))  // Capture the input filename
         .withColumn("Sents",functions.explode(functions.col("s"))) // Flatten out
         .withColumn("Words",functions.explode(functions.col("Sents.w")))
-        //.withColumn("Paragraph",functions.col("_n"))
-        //.withColumn("Sentence",functions.col("Sents._n"))
+        //.withColumn("Paragraph",functions.col("_xml:id"))
+        .withColumn("Sentence",functions.col("Sents._xml:id"))
         .withColumn("word_number", functions.row_number().over(windowSpec)) // Add the word number within the sentence
-        .select("input_file","word_number","Words._lemma" ,"Words._pos","Words._VALUE")
+        .select( "Sentence","word_number","Words._lemma" ,"Words._pos","Words._VALUE")
         //.select("input_file","Paragraph" ,"Sentence","word_number","Words._lemma" ,"Words._type","Words._VALUE")
-        //.toDF("input_file","Paragraph","Sentence","word_number","Lemma","POS","Word") // Just the columns we want.
-        .toDF("input_file","word_number","Lemma","POS","Word") // Just the columns we want.
-//        .toDF("Lemma","POS","Word") // Just the columns we want.
+        .toDF("Sentence","word_number","Lemma","POS","Word") // Just the columns we want.
+        //.toDF("input_file","word_number","Lemma","POS","Word") // Just the columns we want.
 
-//    df.printSchema()
     selected.printSchema()
-//    selected.show()
-
 
     // TODO parameterise the number of partitions?
     //TODO parameterise output format
