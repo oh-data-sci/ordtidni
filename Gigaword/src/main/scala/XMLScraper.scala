@@ -116,7 +116,7 @@ object XMLScraper {
     //_n is <p n="1"> i.e. paragraph number
     //s._n is <s n="1"> i.e. sentence number within the paragraph
 
-    val windowSpec = Window.partitionBy(/*"input_file", "Paragraph" ,*/"Sentence").orderBy("Sentence")
+    val windowSpec = Window.partitionBy(/*"input_file", "Paragraph" ,*/"Sentence").orderBy("WordID")
     // TODO 
     val df = sc.read
       .format("com.databricks.spark.xml")
@@ -136,13 +136,14 @@ object XMLScraper {
         .withColumn("Words",functions.explode(functions.col("Sents.w")))
         //.withColumn("Paragraph",functions.col("_xml:id"))
         .withColumn("Sentence",functions.col("Sents._xml:id"))
+        .withColumn("WordID",functions.col("Words._xml:id"))
         .withColumn("word_number", functions.row_number().over(windowSpec)) // Add the word number within the sentence
         .select( "Sentence","word_number","Words._lemma" ,"Words._pos","Words._VALUE")
         //.select("input_file","Paragraph" ,"Sentence","word_number","Words._lemma" ,"Words._type","Words._VALUE")
         .toDF("Sentence","word_number","Lemma","POS","Word") // Just the columns we want.
         //.toDF("input_file","word_number","Lemma","POS","Word") // Just the columns we want.
 
-    selected.printSchema()
+    
 
     // TODO parameterise the number of partitions?
     //TODO parameterise output format
@@ -153,6 +154,8 @@ object XMLScraper {
       .option("spark.sql.parquet.mergeSchema","true")
       .mode("overwrite")
       .save(l_outputString) // save to output file system
+
+    selected.printSchema()
 
   }
 }
