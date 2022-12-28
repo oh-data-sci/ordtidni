@@ -71,7 +71,7 @@ object XMLScraper {
 
 
     //Input string needs wildcards
-    val l_inputString  = l_sourceFS+"/" + l_source + "/" +l_year + "/" +l_month
+    val l_inputString  = l_sourceFS+"/" + l_source + "/" +l_year //+ "/" +l_month
 
     //Output strings needs blanks, to collapse the data to the highest level
     // e.g. if no month is given, data will end up on the year level
