@@ -10,3 +10,4 @@ target
 */.bsp
 project
 *.bak.*
+nohup.out
