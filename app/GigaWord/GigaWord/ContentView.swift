@@ -12,9 +12,10 @@ import Charts
   
 struct ContentView: View {
     @State private var l_searchword: String = ""
-//    @State private var l_GW_Reply: DataFrame = DataFrame.init() //["lemma": ["total"], "occ": [0]]
+
     @State private var l_GW_Reply: DataFrame = ["year": [0], "lemma": ["Öll orð"], "occ": [301537309]] //that number comes from the final parquet file.
     @State private var l_GW_Total: DataFrame = ["lemma": ["samtals"], "occ": [1]] //total count
+    @State private var l_GW_GrandTotal: DataFrame = ["lemmas": [0]] //grand total count
 
     private enum ViewState {
         case fetching(Error?)
@@ -37,12 +38,12 @@ struct ContentView: View {
                     }
                     
                     TextField(
-                        "Enter an Icelandic noun",
+                        "Nafnorð í eintölu, nefnifalli", //noun, singular and nominative
                         text: $l_searchword
                     )
                     .onSubmit {
                         do {
-                            (l_GW_Reply,l_GW_Total) = try gigawordStore.CallGigaWord(l_the_Word: l_searchword)
+                            (l_GW_Reply,l_GW_Total,l_GW_GrandTotal) = try gigawordStore.CallGigaWord(l_the_Word: l_searchword)
                             self.state = .loaded(l_GW_Reply)
                         }
                         catch {
@@ -53,57 +54,48 @@ struct ContentView: View {
                     .disableAutocorrection(true)
                     .border(.secondary)
                     
-//                    Image(systemName: "globe")
-//                        .imageScale(.large)
-//                        .foregroundStyle(.tint)
-
                     Button{
                         do {
-                            (l_GW_Reply,l_GW_Total) = try gigawordStore.CallGigaWord(l_the_Word: l_searchword)
+                            (l_GW_Reply,l_GW_Total,_) = try gigawordStore.CallGigaWord(l_the_Word: l_searchword)
                             self.state = .loaded(l_GW_Reply)
                         }
                         catch {
                             self.state = .fetching(error)
                         }
                     }
-                    label: {
-                        Text("Search GW ").padding(20)
-                    }
-                .contentShape(Rectangle())
-                    
-                    
-                    //If something has been typed
-                    if(!l_searchword.isEmpty){
-                        Text(l_searchword)
-                            .font(.title)
-                            .fontDesign(.default)
-                            .fontWeight(.bold)
-                            .multilineTextAlignment(.center)
-                        RenderDiscovery(detailFrame: l_GW_Reply, totalFrame: l_GW_Total)
-                    }
-                    
-                    
+                label: {
+                    Text("Leitum!").padding(0)
                 }
-            case .fetching(nil):
-                ProgressView { Text("Fetching Data") }
-            case .fetching(let error?):
-                ErrorView(title: "Query Failed", error: error)
+                .contentShape(Rectangle())
+                                        
+                //If something has been typed
+                if(!l_searchword.isEmpty){
+                    Text(l_searchword)
+                        .font(.title)
+                        .fontDesign(.default)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                    RenderDiscovery(detailFrame: l_GW_Reply, totalFrame: l_GW_Total, grandFrame: l_GW_GrandTotal)
+                }
             }
-        }    .padding()
-               .task {
-                   do {
-                       //This happens only when we load the screen for the first time
-                       //Makes the app search for the init value of l_searchword
-                       
-                       (l_GW_Reply,l_GW_Total) = try  gigawordStore.CallGigaWord(l_the_Word: l_searchword)
-                       self.state = .loaded(l_GW_Reply)
-                   }
-                   catch {
-                       self.state = .fetching(error)
-                   }
-
-            
-        }
+            case .fetching(nil):
+                ProgressView { Text("Les inn gagnasafn") }
+            case .fetching(let error?):
+                ErrorView(title: "Eitthvað fór úrskeiðis", error: error)
+            }
+        }.padding()
+            .task {
+                do {
+                    //This happens only when we load the screen for the first time
+                    //Makes the app search for the init value of l_searchword
+                    
+                    (l_GW_Reply,l_GW_Total,l_GW_GrandTotal) = try  gigawordStore.CallGigaWord(l_the_Word: l_searchword)
+                    self.state = .loaded(l_GW_GrandTotal)
+                }
+                catch {
+                    self.state = .fetching(error)
+                }
+            }
     }
 }
     
@@ -111,7 +103,8 @@ struct RenderDiscovery: View {
     
     let detailFrame: DataFrame
     let totalFrame: DataFrame
-    
+    let grandFrame: DataFrame
+
     private struct ChartRow {
         let year: Date
         let occ: Int
@@ -122,7 +115,7 @@ struct RenderDiscovery: View {
     }
     
     private var rows: [ChartRow] {
-//        let yearColumn = detailFrame.columns[0].assumingType(String.self) //.filled(with: 9999)
+
         let yearColumn = detailFrame.columns[0].assumingType(String.self) //.filled(with: 9999)
         let occColumn = detailFrame.columns[1].assumingType(Int.self).filled(with: -1)
         let calendar = Calendar(identifier: .gregorian)
@@ -139,10 +132,14 @@ struct RenderDiscovery: View {
     
     private var total: [TotalRow] {
         let totalColumn = totalFrame.columns[0].assumingType(Int.self).filled(with: 9999)
+        let grandColumn = grandFrame.columns[0].assumingType(Int.self).filled(with: 9999)
 
-        
         var rows = [TotalRow]()
         for (count) in totalColumn {
+            rows.append(TotalRow(total: count))
+        }
+        
+        for (count) in grandColumn {
             rows.append(TotalRow(total: count))
         }
         return rows
@@ -157,11 +154,12 @@ struct RenderDiscovery: View {
         }
         
         if (totalFrame.isEmpty){
-            Text("No results")
+            Text("Fann ekkert")
         }
         else {
 //            if (!l_searchword.isEmpty){
-            Text("Total: " + " \(total[0].total.formatted(.number.notation(.compactName)))"
+            Text("Alls: " + " \(total[0].total.formatted(.number.notation(.compactName))) tilfelli"
+//                 + " ( \(total[1].total.formatted(.number.notation(.compactName)))"
             )
 //            }
         }

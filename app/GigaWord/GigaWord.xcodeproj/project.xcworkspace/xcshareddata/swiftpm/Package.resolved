@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/duckdb/duckdb-swift.git",
       "state" : {
-        "revision" : "26bcae65719a4919b0af6837c257e8f6fd538bd6",
-        "version" : "0.10.3"
+        "revision" : "7503470332035ea1d784e4c18a85ffcef41b21ab",
+        "version" : "1.0.1-dev2361"
       }
     }
   ],

@@ -24,11 +24,11 @@ struct GigaWordApp: App {
               switch state {
               case .ready(let gigawordStore):
                   ContentView( gigawordStore: gigawordStore)
-//                ContentView()
+
               case .loading(nil):
-                ProgressView { Text("Loading Gigawords") }
+                ProgressView { Text("Les in gagnasafn") }
               case .loading(let error?):
-                ErrorView(title: "Failed To Load Gigawords", error: error) {
+                ErrorView(title: "Ekki tókst að lesa in gagnasafn", error: error) {
                   Task { await prepareGigaWordStore() }
                 }
               }
@@ -48,6 +48,7 @@ struct GigaWordApp: App {
       }
       catch {
         self.state = .loading(error)
+          print(error)
       }
     }
     

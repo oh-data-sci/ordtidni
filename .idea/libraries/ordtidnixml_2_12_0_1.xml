@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ordtidnixml_2.12-0.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Gigaword/target/scala-2.12/ordtidnixml_2.12-0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

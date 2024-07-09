@@ -19,16 +19,52 @@ final class GigaWordStore {
 
         let path = Bundle.main.bundlePath+"/GWData.bundle"
         
-        let sql_1 = "CREATE TABLE GigaWord AS SELECT * FROM read_parquet('\(path)/detail_nouns.parquet' )"
-        let sql_2 = "CREATE table GigaWord_Total AS SELECT * FROM read_parquet('\(path)/total_nouns.parquet')"
-       
-        let database = try Database(store: .inMemory)
+        //let sql_1 = "CREATE TABLE GigaWord AS SELECT * FROM read_parquet('\(path)/detail_nouns.parquet' )"
+        //let sql_2 = "CREATE table GigaWord_Total AS SELECT * FROM read_parquet('\(path)/total_nouns.parquet')"
+
+        let duckdbfile = URL(fileURLWithPath: path+"/GigaWord.duckdb")
+        
+        //let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+//        let url = NSURL(fileURLWithPath: path)
+//        if let pathComponent = url.appendingPathComponent("GigaWord.duckdb") {
+//            let filePath = pathComponent.path
+//            let fileManager = FileManager.default
+//            if fileManager.fileExists(atPath: filePath) {
+//                print("FILE AVAILABLE")
+//            } else {
+//                print("FILE NOT AVAILABLE")
+//            }
+//        } else {
+//            print("FILE PATH NOT AVAILABLE")
+//        }
+        
+//        var fileSize : UInt64
+
+//        do {
+//            return [FileAttributeKey : Any]
+//            let attr = try FileManager.default.attributesOfItem(atPath: path+"/GigaWord.duckdb")
+//            print(attr)
+            
+//            fileSize = attr[FileAttributeKey.size] as! UInt64
+            
+            //print(path)
+            //print(fileSize)
+//        } catch {
+//            print("Error: \(error)")
+//        }
+        
+        //print(duckdbfile.path())
+        let db_config = Database.Configuration()
+//        try db_config.setValue("READ_WRITE", forKey: "access_mode") // the file in the bundle is 420
+        try db_config.setValue("READ_ONLY", forKey: "access_mode")
+        let database = try Database(store: .file(at: duckdbfile), configuration: db_config)
+
+
         let connection = try database.connect()
 
         
-//        let _ = try connection.query("CREATE TABLE GigaWord AS SELECT * FROM read_parquet('\(path)');")
-        let _ = try connection.query(sql_1)
-        let _ = try connection.query(sql_2)
+        //let _ = try connection.query(sql_1)
+        //let _ = try connection.query(sql_2)
 
         return GigaWordStore(database: database, connection: connection)
     }
@@ -41,20 +77,24 @@ final class GigaWordStore {
         self.connection = connection
     }
     
-    func CallGigaWord(l_the_Word: String) throws -> (DataFrame,DataFrame) {
+    func CallGigaWord(l_the_Word: String) throws -> (DataFrame,DataFrame,DataFrame) {
 
         let l_sql = "select year, occ from GigaWord where lemma='"+l_the_Word.lowercased()+"' order by year"
         let l_sql_total = "select occ as occ_total from GigaWord_Total where lemma='"+l_the_Word.lowercased()+"'"
-        
+        let l_sql_grand_total = "select count(distinct lemma) as lemmas from GigaWord_Total"
+
         let result = try connection.query(l_sql)
         let ret_total = try connection.query(l_sql_total)
-        
-        //Is this actually fucking upp the aggreagates?? what does this do?
+        let ret_grand_total = try connection.query(l_sql_grand_total)
+
+        //Is this actually fucking up the aggreagates?? what does this do?
 
         let year = result[0].cast(to: String.self)
         let occurance = result[1].cast(to: Int.self)
         
         let occ_total = ret_total[0].cast(to: Int.self)
+        
+        let grand_total = ret_grand_total[0].cast(to: Int.self)
 
         let df = DataFrame(columns: [
             TabularData.Column(year).eraseToAnyColumn(),
@@ -65,7 +105,11 @@ final class GigaWordStore {
             TabularData.Column(occ_total).eraseToAnyColumn(),
         ])
         
-        return (df,df_total)
+        let df_grand_total = DataFrame(columns: [
+            TabularData.Column(grand_total).eraseToAnyColumn(),
+        ])
+        
+        return (df,df_total,df_grand_total)
     }
 }
 

@@ -8,17 +8,18 @@ export OUTPUTDIR=~/Data/Gigaword/output2022
 # What is the limit of a single glob of files to read in one go, before trying to process one sub-dir at a time?
 # 1GB
 #MEGABYTE_LIMIT=1024
+# 8GB
+#MEGABYTE_LIMIT=8192
 # 10GB
 MEGABYTE_LIMIT=10240
 # 30GB
 #MEGABYTE_LIMIT=30720
 
 # We need one file to derive the XML schema from. This gets copied to /tmp/schema.xml ¯\_(ツ)_/¯ 
-# TODO: create a schema scala objecti once and store in a file?
 SCHEMA=${XML_DATA}/Appeal/2021/IGC-Adjud2_landsrettur_9_2021.ana.xml
 
 # Set some SPARK variables
-export SPARK_MASTER_HOST=$(hostname)
+export SPARK_MASTER_HOST=192.168.0.132
 export SPARK_LOCAL_IP=127.0.0.1
 export SPARK_JAVA_OPTS="-Xmx16g"
 

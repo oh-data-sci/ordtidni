@@ -11,7 +11,7 @@ spark-submit \
 --packages com.databricks:spark-xml_2.12:0.14.0 \
 --deploy-mode client \
 --master spark://${SPARK_MASTER_HOST}:7077  \
---executor-memory 12GB --class XMLScraper --name XMLScraper_App_${2}_${4} \
+--executor-memory 20GB --class XMLScraper --name XMLScraper_App_${2}_${4} \
 $SCRAPE_JAR $*
 ret=$?
 

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E239BD5C2C25F55600D62B95 /* GigaWordstore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E239BD5B2C25F55600D62B95 /* GigaWordstore.swift */; };
+		E239BD5C2C25F55600D62B95 /* GigaWordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E239BD5B2C25F55600D62B95 /* GigaWordStore.swift */; };
 		E283146F2C21B37B00A6335D /* GigaWordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E283146E2C21B37B00A6335D /* GigaWordApp.swift */; };
 		E28314712C21B37B00A6335D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28314702C21B37B00A6335D /* ContentView.swift */; };
 		E28314732C21B37C00A6335D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E28314722C21B37C00A6335D /* Assets.xcassets */; };
@@ -38,7 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E239BD5B2C25F55600D62B95 /* GigaWordstore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GigaWordstore.swift; sourceTree = "<group>"; };
+		E239BD5B2C25F55600D62B95 /* GigaWordStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GigaWordStore.swift; sourceTree = "<group>"; };
 		E283146B2C21B37B00A6335D /* GigaWord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GigaWord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E283146E2C21B37B00A6335D /* GigaWordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GigaWordApp.swift; sourceTree = "<group>"; };
 		E28314702C21B37B00A6335D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 			children = (
 				E2D7C1F92C28B952008B4B24 /* GWData.bundle */,
 				E2860D2E2C25D7730061E9B6 /* ErrorView.swift */,
-				E239BD5B2C25F55600D62B95 /* GigaWordstore.swift */,
+				E239BD5B2C25F55600D62B95 /* GigaWordStore.swift */,
 				E283146E2C21B37B00A6335D /* GigaWordApp.swift */,
 				E28314702C21B37B00A6335D /* ContentView.swift */,
 				E28314722C21B37C00A6335D /* Assets.xcassets */,
@@ -281,7 +281,7 @@
 				E28314712C21B37B00A6335D /* ContentView.swift in Sources */,
 				E283146F2C21B37B00A6335D /* GigaWordApp.swift in Sources */,
 				E2860D2F2C25D7730061E9B6 /* ErrorView.swift in Sources */,
-				E239BD5C2C25F55600D62B95 /* GigaWordstore.swift in Sources */,
+				E239BD5C2C25F55600D62B95 /* GigaWordStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,8 +621,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckdb/duckdb-swift.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
+				kind = exactVersion;
+				version = "1.0.1-dev2361";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
