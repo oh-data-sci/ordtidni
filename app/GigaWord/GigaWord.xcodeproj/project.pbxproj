@@ -38,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AD483A702C6BFD7200A21C8F /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; usesTabs = 0; };
 		E239BD5B2C25F55600D62B95 /* GigaWordStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GigaWordStore.swift; sourceTree = "<group>"; };
 		E283146B2C21B37B00A6335D /* GigaWord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GigaWord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E283146E2C21B37B00A6335D /* GigaWordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GigaWordApp.swift; sourceTree = "<group>"; };
@@ -82,6 +83,7 @@
 		E28314622C21B37B00A6335D = {
 			isa = PBXGroup;
 			children = (
+				AD483A702C6BFD7200A21C8F /* Package.swift */,
 				E283146D2C21B37B00A6335D /* GigaWord */,
 				E283147E2C21B37D00A6335D /* GigaWordTests */,
 				E28314882C21B37D00A6335D /* GigaWordUITests */,
