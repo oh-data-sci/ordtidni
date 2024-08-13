@@ -62,10 +62,6 @@ final class GigaWordStore {
 
         let connection = try database.connect()
 
-        
-        //let _ = try connection.query(sql_1)
-        //let _ = try connection.query(sql_2)
-
         return GigaWordStore(database: database, connection: connection)
     }
     
@@ -77,39 +73,42 @@ final class GigaWordStore {
         self.connection = connection
     }
     
-    func CallGigaWord(l_the_Word: String) throws -> (DataFrame,DataFrame,DataFrame) {
+    func CallGigaWord(l_the_Word: String) throws -> (DataFrame){ //,DataFrame){ //},DataFrame) {
 
-        let l_sql = "select year, occ from GigaWord where lemma='"+l_the_Word.lowercased()+"' order by year"
-        let l_sql_total = "select occ as occ_total from GigaWord_Total where lemma='"+l_the_Word.lowercased()+"'"
-        let l_sql_grand_total = "select count(distinct lemma) as lemmas from GigaWord_Total"
+        let l_sql_detail = "select year, occ from GigaWord where lemma='"+l_the_Word.lowercased()+"' order by year"
+        //let l_sql_total = "select sum(occ) as occ_total from GigaWord where lemma='"+l_the_Word.lowercased()+"'"
+        //let l_sql_total = "select occ as occ_total from GigaWord_Total where lemma='"+l_the_Word.lowercased()+"'"
+        //let l_sql_grand_total = "select count(distinct lemma) as lemmas from GigaWord"
 
-        let result = try connection.query(l_sql)
-        let ret_total = try connection.query(l_sql_total)
-        let ret_grand_total = try connection.query(l_sql_grand_total)
+        let ret_detail = try connection.query(l_sql_detail)
+//        let ret_total = try connection.query(l_sql_total)
+        //let ret_grand_total = try connection.query(l_sql_grand_total)
+//        if ret_total.isEmpty {
+            
+//        print(l_sql_total)
+//        }
 
-        //Is this actually fucking up the aggreagates?? what does this do?
-
-        let year = result[0].cast(to: String.self)
-        let occurance = result[1].cast(to: Int.self)
+        let year = ret_detail[0].cast(to: Int.self)
+        let occurance = ret_detail[1].cast(to: Int.self)
         
-        let occ_total = ret_total[0].cast(to: Int.self)
+//        let occ_total = ret_total[0].cast(to: Int.self)
         
-        let grand_total = ret_grand_total[0].cast(to: Int.self)
+        //let grand_total = ret_grand_total[0].cast(to: Int.self)
 
-        let df = DataFrame(columns: [
+        let df_detail = DataFrame(columns: [
             TabularData.Column(year).eraseToAnyColumn(),
             TabularData.Column(occurance).eraseToAnyColumn(),
         ])
         
-        let df_total = DataFrame(columns: [
-            TabularData.Column(occ_total).eraseToAnyColumn(),
-        ])
+//        let df_total = DataFrame(columns: [
+//            TabularData.Column(occ_total).eraseToAnyColumn(),
+//        ])
         
-        let df_grand_total = DataFrame(columns: [
-            TabularData.Column(grand_total).eraseToAnyColumn(),
-        ])
+        //let df_grand_total = DataFrame(columns: [
+        //    TabularData.Column(grand_total).eraseToAnyColumn(),
+        //])
         
-        return (df,df_total,df_grand_total)
+        return (df_detail)
     }
 }
 

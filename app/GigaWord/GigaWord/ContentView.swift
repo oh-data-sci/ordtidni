@@ -13,9 +13,8 @@ import Charts
 struct ContentView: View {
     @State private var l_searchword: String = ""
 
-    @State private var l_GW_Reply: DataFrame = ["year": [0], "lemma": ["Öll orð"], "occ": [301537309]] //that number comes from the final parquet file.
-    @State private var l_GW_Total: DataFrame = ["lemma": ["samtals"], "occ": [1]] //total count
-    @State private var l_GW_GrandTotal: DataFrame = ["lemmas": [0]] //grand total count
+    @State private var l_GW_Reply: DataFrame = ["year": [Int](), "occ": [Int]()]
+//    @State private var l_GW_Total: DataFrame = ["lemma": ["samtals"], "occ": [1]] //total count
 
     private enum ViewState {
         case fetching(Error?)
@@ -31,11 +30,9 @@ struct ContentView: View {
             case .loaded(_):
                 VStack {
                     
-                    HStack{
-                        Image("GigaWordBird")
+                    Image("GigaWordBird")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                    }
                     
                     TextField(
                         "Nafnorð í eintölu, nefnifalli", //noun, singular and nominative
@@ -43,7 +40,7 @@ struct ContentView: View {
                     )
                     .onSubmit {
                         do {
-                            (l_GW_Reply,l_GW_Total,l_GW_GrandTotal) = try gigawordStore.CallGigaWord(l_the_Word: l_searchword)
+                            (l_GW_Reply) = try gigawordStore.CallGigaWord(l_the_Word: l_searchword)
                             self.state = .loaded(l_GW_Reply)
                         }
                         catch {
@@ -56,8 +53,9 @@ struct ContentView: View {
                     
                     Button{
                         do {
-                            (l_GW_Reply,l_GW_Total,_) = try gigawordStore.CallGigaWord(l_the_Word: l_searchword)
+                            (l_GW_Reply) = try gigawordStore.CallGigaWord(l_the_Word: l_searchword)
                             self.state = .loaded(l_GW_Reply)
+                            
                         }
                         catch {
                             self.state = .fetching(error)
@@ -69,13 +67,14 @@ struct ContentView: View {
                 .contentShape(Rectangle())
                                         
                 //If something has been typed
-                if(!l_searchword.isEmpty){
+                    if(!l_searchword.isEmpty && !l_GW_Reply.isEmpty){
                     Text(l_searchword)
                         .font(.title)
                         .fontDesign(.default)
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
-                    RenderDiscovery(detailFrame: l_GW_Reply, totalFrame: l_GW_Total, grandFrame: l_GW_GrandTotal)
+
+                        RenderDiscovery(detailFrame: l_GW_Reply)
                 }
             }
             case .fetching(nil):
@@ -84,26 +83,21 @@ struct ContentView: View {
                 ErrorView(title: "Eitthvað fór úrskeiðis", error: error)
             }
         }.padding()
-            .task {
-                do {
-                    //This happens only when we load the screen for the first time
-                    //Makes the app search for the init value of l_searchword
-                    
-                    (l_GW_Reply,l_GW_Total,l_GW_GrandTotal) = try  gigawordStore.CallGigaWord(l_the_Word: l_searchword)
-                    self.state = .loaded(l_GW_GrandTotal)
-                }
-                catch {
-                    self.state = .fetching(error)
-                }
+        .task {
+            do {
+                //This happens only when we load the screen for the first time
+                //Makes the app search for the init value of l_searchword
+                
+                self.state = .loaded(l_GW_Reply)
             }
+        }
     }
 }
     
 struct RenderDiscovery: View {
     
     let detailFrame: DataFrame
-    let totalFrame: DataFrame
-    let grandFrame: DataFrame
+//    let totalFrame: DataFrame
 
     private struct ChartRow {
         let year: Date
@@ -116,13 +110,13 @@ struct RenderDiscovery: View {
     
     private var rows: [ChartRow] {
 
-        let yearColumn = detailFrame.columns[0].assumingType(String.self) //.filled(with: 9999)
+        let yearColumn = detailFrame.columns[0].assumingType(Int.self).filled(with: 9999)
         let occColumn = detailFrame.columns[1].assumingType(Int.self).filled(with: -1)
         let calendar = Calendar(identifier: .gregorian)
         
         var rows = [ChartRow]()
         for (year, count) in zip(yearColumn, occColumn) {
-            let the_year = Int(year!) ?? 0
+            let the_year = Int(year) //?? 1900
             let dateComponents = DateComponents(calendar: calendar, year: the_year)
             let date = dateComponents.date ?? .distantPast
             rows.append(ChartRow(year: date , occ: count))
@@ -130,20 +124,17 @@ struct RenderDiscovery: View {
         return rows
     }
     
-    private var total: [TotalRow] {
-        let totalColumn = totalFrame.columns[0].assumingType(Int.self).filled(with: 9999)
-        let grandColumn = grandFrame.columns[0].assumingType(Int.self).filled(with: 9999)
+//    private var total: [TotalRow] {
+//        let totalColumn = detailFrame.columns[1].assumingType(Int.self).filled(with: 9999)
 
-        var rows = [TotalRow]()
-        for (count) in totalColumn {
-            rows.append(TotalRow(total: count))
-        }
-        
-        for (count) in grandColumn {
-            rows.append(TotalRow(total: count))
-        }
-        return rows
-    }
+//        var totals = [TotalRow]()
+//        for (count) in totalColumn {
+//            totals.append(TotalRow(total: count))
+//        }
+
+//
+//        return total
+//    }
         
     var body: some View {
         Chart(rows, id: \.year) { row in
@@ -153,16 +144,12 @@ struct RenderDiscovery: View {
             )
         }
         
-        if (totalFrame.isEmpty){
-            Text("Fann ekkert")
-        }
-        else {
-//            if (!l_searchword.isEmpty){
-            Text("Alls: " + " \(total[0].total.formatted(.number.notation(.compactName))) tilfelli"
-//                 + " ( \(total[1].total.formatted(.number.notation(.compactName)))"
-            )
-//            }
-        }
+//        if (totalFrame.isEmpty){
+//            Text("Fann ekkert")
+//        }
+//        else {
+//            Text("Alls: " + " \(total[0].total.formatted(.number.notation(.compactName))) tilfelli" )
+//        }
         
     }
 }
