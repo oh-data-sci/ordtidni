@@ -11,3 +11,4 @@ target
 project
 *.bak.*
 nohup.out
+.DS_Store
